@@ -24,7 +24,11 @@ int main()
 		{
 			if (event.type == Event::Closed)
 				window.close();
-
+			if (event.type == Event::KeyPressed)
+			{
+				auto data = event.key;
+				world.onKeyDown(data);
+			}
 		}
 		auto seconds = clock.restart().asSeconds();
 

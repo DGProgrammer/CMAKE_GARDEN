@@ -6,6 +6,8 @@
 #include <SFML/Graphics/RenderStates.hpp>
 #include <SFML/Graphics/RenderTarget.hpp>
 #include <SFML/Graphics/RectangleShape.hpp>
+#include <SFML/Window/Event.hpp>
+
 //======================
 //Forward declaration
 //namespace sf {
@@ -27,6 +29,7 @@ public:
 
 	virtual void update(float deltaTime);
 	virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
+	virtual void onKeyDown(sf::Event::KeyEvent event);
 
 private:
 	RecShapPtr p_shape;

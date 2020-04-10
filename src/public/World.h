@@ -3,6 +3,7 @@
 #include <SFML/Graphics/Drawable.hpp>
 #include <SFML/Graphics/RenderStates.hpp>
 #include <SFML/System/Clock.hpp>
+#include <SFML/Window/Event.hpp>
 #include "Entity.h"
 
 class World : public sf::Drawable
@@ -12,6 +13,7 @@ public:
 
 	void init();
 	void update(float deltaTime);
+	void onKeyDown(sf::Event::KeyEvent event);
 
 protected:
 	virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const override;

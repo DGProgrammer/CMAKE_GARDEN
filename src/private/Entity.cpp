@@ -2,6 +2,7 @@
 #include <SFML/Graphics/RenderTarget.hpp>
 #include <SFML/Graphics/RenderStates.hpp>
 #include <SFML/Graphics/RectangleShape.hpp>
+#include <SFML/Window/Event.hpp>
 
 #include <iostream>
 
@@ -41,4 +42,8 @@ void Entity::draw(sf::RenderTarget & target, sf::RenderStates states) const
 {
 	states.transform *= getTransform();
 	target.draw(*p_shape, states);
+}
+
+void Entity::onKeyDown(sf::Event::KeyEvent event)
+{
 }

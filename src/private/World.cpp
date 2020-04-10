@@ -33,9 +33,17 @@ void World::update(float deltaTime)
 	}
 }
 
+void World::onKeyDown(sf::Event::KeyEvent event)
+{
+	for (Entity* e : m_entities)
+	{
+		(e)->onKeyDown(event);
+	}
+}
+
 void World::spawnCharacter()
 {
-	Entity* character = new Entity({ 100,100 }, "res/textures/maceta.png");
+	Character* character = new Character;
 	m_entities.push_back(character);
 }
 
