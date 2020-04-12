@@ -25,16 +25,19 @@ class Entity : public sf::Drawable, public sf::Transformable
 public:
 	Entity(const Entity& e);
 	Entity(sf::Vector2i size, const char* fileName);
+	std::vector<Entity*>* m_entities;
+
 	~Entity();
 
+	sf::FloatRect& rect();
 	virtual void update(float deltaTime);
 	virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 	virtual void onKeyDown(sf::Event::KeyEvent event);
 
 private:
 	RecShapPtr p_shape;
-	sf::Vector2i m_size;
 	sf::Texture* m_texture;
+	sf::Vector2i m_size;
 };
 
 

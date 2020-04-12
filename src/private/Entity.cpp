@@ -34,6 +34,11 @@ Entity::~Entity()
 		delete m_texture;
 }
 
+sf::FloatRect & Entity::rect()
+{
+	return p_shape->getGlobalBounds();
+}
+
 void Entity::update(float deltaTime)
 {
 }

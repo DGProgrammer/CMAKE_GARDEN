@@ -11,6 +11,7 @@ public:
 	virtual void onKeyDown(sf::Event::KeyEvent event) override;
 
 private:
+	void checkColision();
 	float m_velocity = 10;
 	sf::Vector2f m_position;
 };

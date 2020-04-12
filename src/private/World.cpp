@@ -45,6 +45,7 @@ void World::spawnCharacter()
 {
 	Character* character = new Character;
 	m_entities.push_back(character);
+	character->m_entities = &m_entities;
 }
 
 void World::spawnDots()
