@@ -15,6 +15,9 @@ public:
 	void update(float deltaTime);
 	void onKeyDown(sf::Event::KeyEvent event);
 
+	std::vector<Entity*>& getEntities();
+	void removeEntity(Entity* ptr);
+
 protected:
 	virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 

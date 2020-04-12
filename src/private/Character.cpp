@@ -4,22 +4,29 @@
 #include "Character.h"
 #include "Entity.h"
 #include "Dot.h"
+#include "World.h"
 
-Character::Character() : Entity({ 100,100 }, "res/textures/maceta.png")
+Character::Character(World* world) : Entity({ 100,100 }, "res/textures/maceta.png", world)
 {
 	setPosition({ 1, 600 });
-	m_position = getPosition();
 }
 
 void Character::update(float deltaTime)
 {
-	checkColision();
+	Entity* c = checkColision();
+	if (c != nullptr) {
+
+		printf("Collision!\n");
+		m_world->removeEntity(c);
+	}
 }
 
 void Character::onKeyDown(sf::Event::KeyEvent event)
 {
 	sf::Vector2f dir;
 	sf::Vector2f finalPos;
+	sf::Vector2f m_position = getPosition();
+
 	if (event.code == sf::Keyboard::Key::Right)
 	{
 		dir.x += m_velocity;
@@ -31,31 +38,11 @@ void Character::onKeyDown(sf::Event::KeyEvent event)
 	}
 
 	finalPos = m_position + dir;
-
 	if (finalPos.x > 1 && finalPos.x < 700)
 	{
-		m_position = finalPos;
-		setPosition(m_position);
+		setPosition(finalPos);
 	}
 }
 
-void Character::checkColision()
-{
-	for (Entity* e : *m_entities)
-	{
-		Dot* d = dynamic_cast<Dot*>(e);
-		if (d != nullptr)
-		{
-			sf::Vector2f distance((getPosition() - d->getPosition()));
-			if (distance.y < 1 && distance.y > -1)
-			{
-				if (distance.x < 1)
-				{
-					if (rect().contains(d->getPosition()))
-						printf("YA");
-				}
-			}
-		}
-	}
-}
+
 

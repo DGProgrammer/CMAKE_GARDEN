@@ -1,6 +1,6 @@
 #include "Dot.h"
 
-Dot::Dot() : Entity({ 20,20 }, "res/textures/dot.png")
+Dot::Dot(World* world) : Entity({ 20,20 }, "res/textures/dot.png", world)
 {
 	setPosition(rand() % 800, 0);
 }
