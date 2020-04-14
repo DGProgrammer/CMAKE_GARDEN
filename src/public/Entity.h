@@ -13,6 +13,7 @@
 //namespace sf {
 //	class RectangleShape;
 //}
+class World;
 
 //======================
 //Class
@@ -24,20 +25,33 @@ class Entity : public sf::Drawable, public sf::Transformable
 {
 public:
 	Entity(const Entity& e);
-	Entity(sf::Vector2i size, const char* fileName);
-	std::vector<Entity*>* m_entities;
+	Entity(sf::Vector2i size, const char* fileName, World* world);
+	
+	//std::vector<Entity*>* m_entities;   // La lista de entidades la controla el mundo
+									      // No es un concepto incorrecto si quieres
+										  // hijos en tus entidades, pero en este caso
+										  // las gotas no son hijas del Character
+										  // si no del mundo
 
 	~Entity();
 
-	sf::FloatRect& rect();
+	sf::FloatRect getRect();
 	virtual void update(float deltaTime);
 	virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 	virtual void onKeyDown(sf::Event::KeyEvent event);
+	
+	
+
+protected:
+	Entity* checkColision();
 
 private:
 	RecShapPtr p_shape;
 	sf::Texture* m_texture;
 	sf::Vector2i m_size;
+
+protected:
+	World* m_world;
 };
 
 

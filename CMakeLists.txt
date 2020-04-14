@@ -1,6 +1,6 @@
 ﻿cmake_minimum_required (VERSION 3.0) #Version minima de cmake
 project(Garden) #Nombre del proyecto --> ${PROJECT_NAME}
-set(CMAKE_CXX_STANDARD 11) #Lenguaje y version que esta usando
+set(CMAKE_CXX_STANDARD 11) #Es solo la version que usamos, no el lenguaje
 
 include_directories(src/public) #Busca los archivos donde tendremos los include
 file(GLOB_RECURSE SRC_CORE src/private/*.cpp) #Busca todos los archivos acabados como ponga 

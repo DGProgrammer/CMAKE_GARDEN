@@ -7,22 +7,24 @@
 #include <iostream>
 
 #include "Entity.h"
+#include "World.h"
 
 using namespace sf;
 using namespace std;
 
 Entity::Entity(const Entity & e)
-	: p_shape(new RectangleShape(*e.p_shape)), m_size(e.m_size), m_texture(new Texture(*e.m_texture))
+	: p_shape(new RectangleShape(*e.p_shape)), m_size(e.m_size), m_texture(new Texture(*e.m_texture)), m_world(e.m_world)
 {
 	setPosition(e.getPosition());
 	setRotation(e.getRotation());
 	setScale(e.getScale());
 }
 
-Entity::Entity(sf::Vector2i size, const char* fileName) :
+Entity::Entity(sf::Vector2i size, const char* fileName, World* world) :
 	p_shape(new RectangleShape({ (float)size.x, (float)size.y })),
 	m_size(size),
-	m_texture(new Texture)
+	m_texture(new Texture),
+	m_world(world)
 {
 	m_texture->loadFromFile(fileName);
 	p_shape->setTexture(m_texture);
@@ -34,9 +36,20 @@ Entity::~Entity()
 		delete m_texture;
 }
 
-sf::FloatRect & Entity::rect()
+sf::FloatRect Entity::getRect()
 {
-	return p_shape->getGlobalBounds();
+	// No puedes devolver una referencia de un objeto destruido!!
+	// cuando haces getGlobalBounds generas una variable volatil
+	// que se destruye al final de este ambito.
+	//
+	// Otra cosa seria que guardaras el resultado en una variable
+	// dentro de esta clase y entonces devolvieras una referecia
+	// de esa variable
+
+	sf::FloatRect bounds = p_shape->getGlobalBounds();
+	bounds.left = getPosition().x;
+	bounds.top  = getPosition().y;
+	return bounds;
 }
 
 void Entity::update(float deltaTime)
@@ -51,4 +64,19 @@ void Entity::draw(sf::RenderTarget & target, sf::RenderStates states) const
 
 void Entity::onKeyDown(sf::Event::KeyEvent event)
 {
+}
+
+Entity* Entity::checkColision()
+{
+	auto rect = getRect();
+	for (Entity* e : m_world->getEntities())
+	{
+		if (e == this) continue;
+
+		auto otherRect = e->getRect();
+		if (rect.contains(e->getPosition())) {
+			return e;
+		}
+	}
+	return nullptr;
 }
